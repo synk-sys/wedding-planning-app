@@ -362,6 +362,13 @@ struct BudgetItemRow: View {
         case .invitations: return "envelope"
         case .transport: return "car"
         case .accommodation: return "bed.double"
+        case .gifts: return "gift"
+        case .cake: return "birthday.cake"
+        case .honeymoon: return "airplane"
+        case .stationery: return "doc.text"
+        case .beautyAndWellness: return "sparkle"
+        case .legal: return "doc.badge.gearshape"
+        case .insurance: return "shield"
         case .miscellaneous: return "ellipsis.circle"
         }
     }

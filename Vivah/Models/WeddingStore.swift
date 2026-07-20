@@ -300,30 +300,58 @@ class WeddingStore: ObservableObject {
             items.append(item)
         }
 
-        // Add common checklist items
-        let commonTasks: [(String, Int, ChecklistItem.Priority)] = [
-            ("Book venue for all ceremonies", 180, .urgent),
-            ("Send save-the-dates", 120, .high),
-            ("Book photographer", 150, .urgent),
-            ("Book videographer", 150, .high),
-            ("Book caterer", 120, .urgent),
-            ("Order wedding cards/invitations", 90, .high),
-            ("Book travel & accommodation for out-of-station guests", 60, .medium),
-            ("Order bride's lehenga/outfit", 120, .high),
-            ("Order groom's sherwani/outfit", 90, .high),
-            ("Book makeup artist for bride", 90, .high),
-            ("Confirm RSVP count with caterer", 14, .urgent),
-            ("Prepare welcome bags for guests", 30, .medium),
-            ("Arrange trousseau items", 60, .medium),
-            ("Book honeymoon travel", 90, .medium),
-            ("Purchase wedding rings", 60, .high),
+        // Add common checklist items, organized as a 12-months-out master timeline
+        let commonTasks: [(String, String, Int, ChecklistItem.Priority)] = [
+            // 12 months before
+            ("Set overall budget and family contribution split", "Planning", 365, .urgent),
+            ("Book venue for all ceremonies", "Venue", 300, .urgent),
+            ("Decide guest list size", "Guests", 300, .high),
+            ("Hire wedding planner (optional)", "Planning", 300, .medium),
+            // 9 months before
+            ("Book photographer", "Vendors", 270, .urgent),
+            ("Book videographer", "Vendors", 270, .high),
+            ("Book caterer", "Vendors", 240, .urgent),
+            ("Send save-the-dates", "Guests", 240, .high),
+            ("Book accommodation blocks for out-of-station guests", "Guests", 210, .medium),
+            // 6 months before
+            ("Order bride's lehenga/outfit", "Attire", 180, .high),
+            ("Order groom's sherwani/outfit", "Attire", 180, .high),
+            ("Purchase wedding rings", "Attire", 180, .high),
+            ("Book decorator/florist", "Vendors", 180, .high),
+            ("Book music/band/DJ", "Vendors", 180, .medium),
+            ("Book makeup artist for bride", "Beauty", 150, .high),
+            ("Register for gifts/registry", "Guests", 150, .low),
+            // 3-4 months before
+            ("Order wedding cards/invitations", "Stationery", 120, .high),
+            ("Finalize menu with caterer", "Vendors", 100, .high),
+            ("Book mehndi artist", "Vendors", 100, .medium),
+            ("Book honeymoon travel", "Honeymoon", 100, .medium),
+            ("Arrange trousseau items", "Attire", 90, .medium),
+            ("Apply for marriage license/legal documentation", "Legal", 90, .urgent),
+            // 6-8 weeks before
+            ("Mail invitations", "Stationery", 56, .urgent),
+            ("Finalize seating chart draft", "Guests", 45, .medium),
+            ("Schedule hair & makeup trial", "Beauty", 45, .medium),
+            ("Confirm transport for wedding party", "Logistics", 45, .medium),
+            ("Prepare welcome bags for guests", "Guests", 30, .medium),
+            // 2-4 weeks before
+            ("Confirm RSVP count with caterer", "Guests", 14, .urgent),
+            ("Finalize seating chart", "Guests", 14, .high),
+            ("Confirm final payments with all vendors", "Vendors", 10, .urgent),
+            ("Pack for honeymoon", "Honeymoon", 7, .medium),
+            ("Delegate day-of coordination tasks", "Logistics", 7, .high),
+            // final week / day-of
+            ("Pick up outfits and accessories", "Attire", 3, .urgent),
+            ("Confirm arrival times with all vendors", "Logistics", 2, .urgent),
+            ("Prepare emergency kit for wedding day", "Logistics", 1, .medium),
+            ("Send final headcount to caterer", "Guests", 1, .urgent),
         ]
 
-        for (task, daysBefore, priority) in commonTasks {
+        for (task, category, daysBefore, priority) in commonTasks {
             let dueDate = weddingDate.addingTimeInterval(-Double(daysBefore) * 86400)
             let item = ChecklistItem(
                 title: task,
-                category: "General",
+                category: category,
                 dueDate: dueDate < now ? now.addingTimeInterval(86400 * 7) : dueDate,
                 assignedTo: .shared,
                 priority: priority

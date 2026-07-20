@@ -22,6 +22,10 @@ struct AddGuestView: View {
     @State private var tableNumber = ""
     @State private var isVIP = false
     @State private var whatsappOptIn = true
+    @State private var invitationSent = false
+    @State private var accommodationNeeded = false
+    @State private var giftReceived = false
+    @State private var thankYouCardSent = false
     @State private var notes = ""
 
     var isEditing: Bool { editGuest != nil }
@@ -132,6 +136,15 @@ struct AddGuestView: View {
                         .lineLimit(2...4)
                 }
 
+                Section("Tracking") {
+                    Toggle("Invitation Sent", isOn: $invitationSent)
+                    Toggle("Needs Accommodation", isOn: $accommodationNeeded)
+                    Toggle("Gift Received", isOn: $giftReceived)
+                    if giftReceived {
+                        Toggle("Thank You Card Sent", isOn: $thankYouCardSent)
+                    }
+                }
+
                 if isEditing {
                     Section {
                         Button("Delete Guest", role: .destructive) {
@@ -176,6 +189,10 @@ struct AddGuestView: View {
                 tableNumber = g.tableNumber
                 isVIP = g.isVIP
                 whatsappOptIn = g.whatsappOptIn
+                invitationSent = g.invitationSent
+                accommodationNeeded = g.accommodationNeeded
+                giftReceived = g.giftReceived
+                thankYouCardSent = g.thankYouCardSent
                 notes = g.notes
             }
         }
@@ -199,6 +216,11 @@ struct AddGuestView: View {
         guest.tableNumber = tableNumber
         guest.isVIP = isVIP
         guest.whatsappOptIn = whatsappOptIn
+        guest.invitationSent = invitationSent
+        if invitationSent && guest.invitationSentDate == nil { guest.invitationSentDate = Date() }
+        guest.accommodationNeeded = accommodationNeeded
+        guest.giftReceived = giftReceived
+        guest.thankYouCardSent = thankYouCardSent
         guest.notes = notes
         if rsvpStatus != .pending { guest.rsvpDate = Date() }
 

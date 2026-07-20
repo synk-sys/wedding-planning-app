@@ -82,6 +82,15 @@ enum VendorCategory: String, Codable, CaseIterable {
     case jewellery = "Jewellery"
     case clothing = "Clothing/Lehenga"
     case florist = "Florist"
+    case cake = "Cake/Dessert"
+    case tentAndLighting = "Tent & Lighting"
+    case dj = "DJ"
+    case choreographer = "Choreographer"
+    case emcee = "Emcee/Host"
+    case fireworks = "Fireworks"
+    case travelAgent = "Travel Agent"
+    case stationery = "Stationery/Favors"
+    case security = "Security"
     case other = "Other"
 
     var icon: String {
@@ -100,6 +109,15 @@ enum VendorCategory: String, Codable, CaseIterable {
         case .jewellery: return "star.fill"
         case .clothing: return "tag.fill"
         case .florist: return "leaf.fill"
+        case .cake: return "birthday.cake.fill"
+        case .tentAndLighting: return "lightbulb.fill"
+        case .dj: return "hifispeaker.fill"
+        case .choreographer: return "figure.dance"
+        case .emcee: return "mic.fill"
+        case .fireworks: return "sparkle"
+        case .travelAgent: return "airplane"
+        case .stationery: return "gift.fill"
+        case .security: return "shield.fill"
         case .other: return "ellipsis.circle.fill"
         }
     }
@@ -117,6 +135,13 @@ enum BudgetCategory: String, Codable, CaseIterable {
     case invitations = "Invitations"
     case transport = "Transport"
     case accommodation = "Accommodation"
+    case gifts = "Gifts & Favors"
+    case cake = "Cake/Dessert"
+    case honeymoon = "Honeymoon"
+    case stationery = "Stationery"
+    case beautyAndWellness = "Beauty & Wellness"
+    case legal = "Legal/Documentation"
+    case insurance = "Insurance"
     case miscellaneous = "Miscellaneous"
 }
 
@@ -220,6 +245,11 @@ struct Guest: Codable, Identifiable {
     var rsvpDate: Date?
     var city: String = ""
     var isVIP: Bool = false
+    var invitationSent: Bool = false
+    var invitationSentDate: Date?
+    var accommodationNeeded: Bool = false
+    var giftReceived: Bool = false
+    var thankYouCardSent: Bool = false
 
     var fullName: String { "\(firstName) \(lastName)" }
     var initials: String {
