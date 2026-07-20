@@ -178,7 +178,7 @@
 /* Begin PBXNativeTarget section */
 		A500 /* Vivah */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A601;
+			buildConfigurationList = A605;
 			buildPhases = (
 				A501 /* Sources */,
 				A502 /* Frameworks */,
@@ -453,7 +453,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A601 /* Build configuration list for PBXNativeTarget "Vivah" */ = {
+		A605 /* Build configuration list for PBXNativeTarget "Vivah" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A601 /* Debug */,

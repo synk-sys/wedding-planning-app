@@ -456,7 +456,7 @@ struct BudgetSetupPage: View {
                         .padding(14)
                         .background(VivahTheme.ivory.opacity(0.1))
                         .cornerRadius(12)
-                        .onChange(of: budgetText) { newVal in
+                        .onChange(of: budgetText) { _, newVal in
                             let digits = newVal.filter { $0.isNumber }
                             if let val = Double(digits) {
                                 totalBudget = val
@@ -567,7 +567,12 @@ struct BudgetSetupPage: View {
 }
 
 // MARK: - Flow Layout
-struct FlowLayout<Data: Collection, Content: View>: View where Data.Element: Hashable {
+private class FlowLayoutBox {
+    var width: CGFloat = 0
+    var height: CGFloat = 0
+}
+
+struct FlowLayout<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
     let items: Data
     let content: (Data.Element) -> Content
 
@@ -581,25 +586,25 @@ struct FlowLayout<Data: Collection, Content: View>: View where Data.Element: Has
     }
 
     private func generateContent(in geo: GeometryProxy) -> some View {
-        var width = CGFloat.zero
-        var height = CGFloat.zero
+        let box = FlowLayoutBox()
 
         return ZStack(alignment: .topLeading) {
             ForEach(Array(items.enumerated()), id: \.element) { _, item in
+                let isLast = item == items.last!
                 content(item)
                     .padding(.all, 4)
-                    .alignmentGuide(.leading) { d in
-                        if abs(width - d.width) > geo.size.width {
-                            width = 0
-                            height -= d.height
+                    .alignmentGuide(.leading) { (d: ViewDimensions) -> CGFloat in
+                        if abs(box.width - d.width) > geo.size.width {
+                            box.width = 0
+                            box.height -= d.height
                         }
-                        let result = width
-                        if item == items.last! { width = 0 } else { width -= d.width }
+                        let result = box.width
+                        box.width = isLast ? 0 : box.width - d.width
                         return result
                     }
-                    .alignmentGuide(.top) { _ in
-                        let result = height
-                        if item == items.last! { height = 0 }
+                    .alignmentGuide(.top) { (_: ViewDimensions) -> CGFloat in
+                        let result = box.height
+                        if isLast { box.height = 0 }
                         return result
                     }
             }

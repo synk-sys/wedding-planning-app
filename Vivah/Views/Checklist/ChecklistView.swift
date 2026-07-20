@@ -408,11 +408,11 @@ struct ChecklistItemDetailView: View {
 
                 Section("Completion") {
                     Toggle("Completed", isOn: $item.isCompleted)
-                        .onChange(of: item.isCompleted) { completed in
+                        .onChange(of: item.isCompleted) { _, completed in
                             item.completedDate = completed ? Date() : nil
                         }
                     if let cd = item.completedDate {
-                        DetailRow(label: "Completed On", value: cd.formatted(date: .medium, time: .omitted))
+                        DetailRow(label: "Completed On", value: cd.formatted(date: .abbreviated, time: .omitted))
                     }
                 }
 

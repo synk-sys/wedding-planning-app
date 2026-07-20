@@ -330,7 +330,7 @@ struct ShagunDetailView: View {
                         DetailRow(label: "Amount", value: entry.amount.inrFormatted)
                     }
                     DetailRow(label: "Event", value: eventName)
-                    DetailRow(label: "Date", value: entry.receivedDate.formatted(date: .medium, time: .omitted))
+                    DetailRow(label: "Date", value: entry.receivedDate.formatted(date: .abbreviated, time: .omitted))
                     DetailRow(label: "Relationship Side", value: entry.relationshipSide.rawValue)
                     if !entry.description.isEmpty {
                         DetailRow(label: "Description", value: entry.description)
@@ -339,13 +339,13 @@ struct ShagunDetailView: View {
 
                 Section("Thank You Status") {
                     Toggle("Thank You Sent", isOn: $entry.thankYouSent)
-                        .onChange(of: entry.thankYouSent) { sent in
+                        .onChange(of: entry.thankYouSent) { _, sent in
                             if sent { entry.thankYouDate = Date() }
                             else { entry.thankYouDate = nil }
                             store.updateShagunEntry(entry)
                         }
                     if let td = entry.thankYouDate {
-                        DetailRow(label: "Thank You Sent On", value: td.formatted(date: .medium, time: .omitted))
+                        DetailRow(label: "Thank You Sent On", value: td.formatted(date: .abbreviated, time: .omitted))
                     }
                 }
 
@@ -403,7 +403,7 @@ struct AddShagunView: View {
                                 Text(guest.fullName).tag(guest.id as UUID?)
                             }
                         }
-                        .onChange(of: selectedGuestId) { gid in
+                        .onChange(of: selectedGuestId) { _, gid in
                             if let gid = gid, let guest = store.guests.first(where: { $0.id == gid }) {
                                 fromName = guest.fullName
                                 relationshipSide = guest.relationshipSide
