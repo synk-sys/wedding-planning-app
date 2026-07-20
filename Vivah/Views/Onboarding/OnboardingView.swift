@@ -524,21 +524,12 @@ struct BudgetSetupPage: View {
                     .frame(height: 8)
 
                     HStack {
-                        Text("Bride: \(totalBudget * brideFamilyShare / 100).inrShortFormatted")
+                        Text("Bride: \(budgetSplitBride)")
                             .font(.caption).foregroundColor(VivahTheme.gold)
                         Spacer()
-                        Text("Groom: \((totalBudget * (100 - brideFamilyShare) / 100)).inrShortFormatted")
+                        Text("Groom: \(budgetSplitGroom)")
                             .font(.caption).foregroundColor(VivahTheme.roseGold)
                     }
-                    .overlay(
-                        HStack {
-                            Text(budgetSplitBride)
-                                .font(.caption).foregroundColor(VivahTheme.gold)
-                            Spacer()
-                            Text(budgetSplitGroom)
-                                .font(.caption).foregroundColor(VivahTheme.roseGold)
-                        }
-                    )
                 }
                 .padding(16)
                 .background(VivahTheme.ivory.opacity(0.08))
