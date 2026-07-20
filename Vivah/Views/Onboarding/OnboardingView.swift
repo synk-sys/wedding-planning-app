@@ -88,7 +88,9 @@ struct OnboardingView: View {
                         HStack {
                             Text(currentPage == pageCount - 1 ? "Begin Planning" : "Continue")
                                 .fontWeight(.semibold)
-                            Image(systemName: currentPage == pageCount - 1 ? "sparkles" : "chevron.right")
+                            if currentPage != pageCount - 1 {
+                                Image(systemName: "chevron.right")
+                            }
                         }
                         .foregroundColor(VivahTheme.maroon)
                         .frame(maxWidth: .infinity)
