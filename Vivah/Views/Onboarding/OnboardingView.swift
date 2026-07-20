@@ -9,12 +9,13 @@ struct OnboardingView: View {
     @State private var venue = ""
     @State private var city = ""
     @State private var selectedReligion: Religion = .northIndianHindu
+    @State private var eventDates: [String: Date] = [:]
     @State private var totalBudget: Double = 2000000
     @State private var brideFamilyShare: Double = 50
     @State private var budgetText = "20,00,000"
     @State private var animateIn = false
 
-    let pageCount = 4
+    let pageCount = 5
 
     var body: some View {
         ZStack {
@@ -62,8 +63,10 @@ struct OnboardingView: View {
                         .tag(1)
                     ReligionSelectionPage(selectedReligion: $selectedReligion)
                         .tag(2)
-                    BudgetSetupPage(totalBudget: $totalBudget, budgetText: $budgetText, brideFamilyShare: $brideFamilyShare)
+                    EventDatesPage(religion: selectedReligion, weddingDate: weddingDate, eventDates: $eventDates)
                         .tag(3)
+                    BudgetSetupPage(totalBudget: $totalBudget, budgetText: $budgetText, brideFamilyShare: $brideFamilyShare)
+                        .tag(4)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(.easeInOut, value: currentPage)
@@ -117,9 +120,17 @@ struct OnboardingView: View {
 
     func handleNext() {
         if currentPage < pageCount - 1 {
+            if currentPage == 2 { seedEventDates() }
             withAnimation { currentPage += 1 }
         } else {
             finishOnboarding()
+        }
+    }
+
+    func seedEventDates() {
+        let defaults = store.generateDefaultEvents(for: selectedReligion, weddingDate: weddingDate)
+        for event in defaults where eventDates[event.name] == nil {
+            eventDates[event.name] = event.date
         }
     }
 
@@ -134,7 +145,15 @@ struct OnboardingView: View {
         wedding.totalBudget = totalBudget
         wedding.brideFamilyBudgetShare = brideFamilyShare
 
-        let events = store.generateDefaultEvents(for: selectedReligion, weddingDate: weddingDate)
+        let eventColors = ["deepRed", "gold", "marigold", "green", "purple", "saffron", "rose"]
+        var events: [WeddingEvent] = []
+        for (i, name) in selectedReligion.defaultEvents.enumerated() {
+            var event = WeddingEvent(name: name)
+            event.date = eventDates[name] ?? weddingDate
+            event.color = eventColors[i % eventColors.count]
+            events.append(event)
+        }
+
         store.wedding = wedding
         let checklist = store.generateDefaultChecklist(for: selectedReligion)
         store.completeOnboarding(wedding: wedding, events: events, checklist: checklist)
@@ -289,6 +308,57 @@ struct CoupleDetailsPage: View {
             .padding(.horizontal, 28)
             .padding(.top, 10)
         }
+    }
+}
+
+struct EventDatesPage: View {
+    let religion: Religion
+    let weddingDate: Date
+    @Binding var eventDates: [String: Date]
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                VStack(spacing: 6) {
+                    Text("When Are Your Ceremonies?")
+                        .font(.system(size: 24, weight: .bold, design: .serif))
+                        .foregroundColor(VivahTheme.ivory)
+                    Text("Set a date for each celebration")
+                        .font(.subheadline)
+                        .foregroundColor(VivahTheme.ivory.opacity(0.7))
+                }
+
+                VStack(spacing: 16) {
+                    ForEach(religion.defaultEvents, id: \.self) { name in
+                        VStack(alignment: .leading, spacing: 8) {
+                            Label(name, systemImage: "calendar")
+                                .font(.caption)
+                                .foregroundColor(VivahTheme.gold)
+                                .textCase(.uppercase)
+                                .kerning(0.5)
+
+                            DatePicker("", selection: binding(for: name), displayedComponents: .date)
+                                .datePickerStyle(.compact)
+                                .colorScheme(.dark)
+                                .padding(14)
+                                .background(VivahTheme.ivory.opacity(0.1))
+                                .cornerRadius(12)
+                        }
+                    }
+                }
+
+                Spacer(minLength: 20)
+            }
+            .padding(.horizontal, 28)
+            .padding(.top, 10)
+        }
+    }
+
+    private func binding(for name: String) -> Binding<Date> {
+        Binding<Date>(
+            get: { eventDates[name] ?? weddingDate },
+            set: { eventDates[name] = $0 }
+        )
     }
 }
 

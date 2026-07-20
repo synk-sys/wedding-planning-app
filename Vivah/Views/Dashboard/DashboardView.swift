@@ -89,14 +89,6 @@ struct HeroCountdownCard: View {
                         Text("\(store.wedding.groomName) & \(store.wedding.brideName)")
                             .font(.system(size: 22, weight: .bold, design: .serif))
                             .foregroundColor(VivahTheme.ivory)
-                        Text(store.wedding.religion.rawValue)
-                            .font(.caption)
-                            .foregroundColor(VivahTheme.gold.opacity(0.9))
-                        if !store.wedding.city.isEmpty {
-                            Label(store.wedding.city, systemImage: "location.fill")
-                                .font(.caption)
-                                .foregroundColor(VivahTheme.ivory.opacity(0.7))
-                        }
                     }
                     Spacer()
                     VStack(spacing: 4) {
