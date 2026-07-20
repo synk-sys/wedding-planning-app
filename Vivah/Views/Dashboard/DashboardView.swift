@@ -86,7 +86,7 @@ struct HeroCountdownCard: View {
             VStack(spacing: 10) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("\(store.wedding.brideName) & \(store.wedding.groomName)")
+                        Text("\(store.wedding.groomName) & \(store.wedding.brideName)")
                             .font(.system(size: 22, weight: .bold, design: .serif))
                             .foregroundColor(VivahTheme.ivory)
                         Text(store.wedding.religion.rawValue)

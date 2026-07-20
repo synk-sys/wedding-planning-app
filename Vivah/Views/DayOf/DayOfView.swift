@@ -135,7 +135,7 @@ struct DayOfHeroCard: View {
                         .font(.caption)
                         .foregroundColor(VivahTheme.gold.opacity(0.8))
                     Spacer()
-                    Text("\(wedding.brideName) & \(wedding.groomName)")
+                    Text("\(wedding.groomName) & \(wedding.brideName)")
                         .font(.caption)
                         .foregroundColor(VivahTheme.ivory.opacity(0.7))
                 }

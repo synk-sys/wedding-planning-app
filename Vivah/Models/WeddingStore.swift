@@ -386,7 +386,7 @@ class WeddingStore: ObservableObject {
 
     // MARK: - WhatsApp RSVP
     func generateWhatsAppRSVPLink(for guest: Guest, eventNames: [String]) -> String {
-        let message = "Hi \(guest.firstName)! You're invited to \(wedding.brideName) & \(wedding.groomName)'s wedding celebrations. Events: \(eventNames.joined(separator: ", ")). Please confirm your attendance by replying YES or NO."
+        let message = "Hi \(guest.firstName)! You're invited to \(wedding.groomName) & \(wedding.brideName)'s wedding celebrations. Events: \(eventNames.joined(separator: ", ")). Please confirm your attendance by replying YES or NO."
         let encoded = message.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let phone = guest.phone.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "")
         return "https://wa.me/\(phone)?text=\(encoded)"

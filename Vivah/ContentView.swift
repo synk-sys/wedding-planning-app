@@ -114,7 +114,7 @@ struct MoreMenuView: View {
                         Image(systemName: "person.2.fill")
                             .foregroundColor(VivahTheme.gold)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("\(store.wedding.brideName) & \(store.wedding.groomName)")
+                            Text("\(store.wedding.groomName) & \(store.wedding.brideName)")
                                 .font(.subheadline).fontWeight(.semibold)
                             Text(store.wedding.religion.rawValue)
                                 .font(.caption).foregroundColor(.secondary)

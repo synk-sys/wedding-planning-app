@@ -241,16 +241,16 @@ struct CoupleDetailsPage: View {
 
                 VStack(spacing: 16) {
                     OnboardingTextField(
-                        title: "Bride's Name",
-                        placeholder: "Enter bride's name",
-                        text: $brideName,
+                        title: "Groom's Name",
+                        placeholder: "Enter groom's name",
+                        text: $groomName,
                         icon: "person.fill"
                     )
 
                     OnboardingTextField(
-                        title: "Groom's Name",
-                        placeholder: "Enter groom's name",
-                        text: $groomName,
+                        title: "Bride's Name",
+                        placeholder: "Enter bride's name",
+                        text: $brideName,
                         icon: "person.fill"
                     )
 
