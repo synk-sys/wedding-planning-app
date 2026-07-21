@@ -289,13 +289,6 @@ struct CoupleDetailsPage: View {
                     }
 
                     OnboardingTextField(
-                        title: "Wedding Venue (Optional)",
-                        placeholder: "Hotel / Banquet / Farm House",
-                        text: $venue,
-                        icon: "building.2.fill"
-                    )
-
-                    OnboardingTextField(
                         title: "City",
                         placeholder: "Delhi, Mumbai, Chennai...",
                         text: $city,
